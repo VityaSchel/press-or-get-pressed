@@ -1,17 +1,17 @@
-// import { NavigationProp } from '@react-navigation/native'
-// import type { NavigationRoute } from '@react-navigation/routers/src/types'
-import type { useNavigation } from '@react-navigation/native'
+import type { NavigationProp } from '@react-navigation/native'
+import { SCREENS } from '../../data/enums'
 
-export type DefaultNavigationRef = /*NavigationProp<ReactNavigation.RootParamList, never, undefined, Readonly<{
-    key: string  
-    index: number  
-    routeNames: never[]  
-    history?: unknown[]  
-    routes: NavigationRoute<ReactNavigation.RootParamList, never>[]  
-    type: string  
-    stale: false  
-}>, {}, {}>*/ ReturnType<typeof useNavigation>
+export type DefaultNavigationRef = NavigationProp<ReactNavigation.RootParamList>
 
-export default function replaceNavigationStack(navigationRef: DefaultNavigationRef) {
+type ScreenName = typeof SCREENS[keyof typeof SCREENS]
 
+export default function replaceNavigationStack(navigationRef: DefaultNavigationRef, routes: ScreenName)
+export default function replaceNavigationStack(navigationRef: DefaultNavigationRef, routes: ScreenName[], index?: number)
+export default function replaceNavigationStack(navigationRef: DefaultNavigationRef, routes: ScreenName[] | ScreenName, index = 0) {
+  navigationRef.reset({ 
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-expect-error https://reactnavigation.org/docs/navigation-actions/#reset
+    routes: Array.isArray(routes) ? routes.map(r => ({ name: r })) : [{ name: routes }], 
+    index 
+  })
 }
